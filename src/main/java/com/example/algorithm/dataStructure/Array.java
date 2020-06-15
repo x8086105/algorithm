@@ -97,6 +97,9 @@ public class Array<E> {
         }
         return -1;
     }
+    public E removeLast(){
+        return removeAt(size - 1);
+    }
     /**
      * 移除某个下标的元素
      * @param position 下标
@@ -128,7 +131,9 @@ public class Array<E> {
         }
         return data[position];
     }
-
+    public E getLast(){
+        return get(size-1);
+    }
     /**
      * 通过下标以及元素重置某个下表的元素
      * @param position
