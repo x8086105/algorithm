@@ -100,6 +100,9 @@ public class Array<E> {
     public E removeLast(){
         return removeAt(size - 1);
     }
+    public E removeFirst(){
+        return removeAt(0);
+    }
     /**
      * 移除某个下标的元素
      * @param position 下标
@@ -110,7 +113,7 @@ public class Array<E> {
         }
         E res = data[position];
         for(int i = position;i < size -1 ; i++){
-            data[position] = data[i + 1];
+            data[i] = data[i + 1];
         }
         size --;
         //进行缩容
@@ -133,6 +136,9 @@ public class Array<E> {
     }
     public E getLast(){
         return get(size-1);
+    }
+    public E getFirst(){
+        return get(0);
     }
     /**
      * 通过下标以及元素重置某个下表的元素
