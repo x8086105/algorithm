@@ -80,4 +80,51 @@ public class BST<E extends Comparable<E>> {
             return contains(root.right,e);
         }
     }
+    /**
+     * 前序遍历
+     */
+    public void preTraversal(){
+        this.preTraversal(root);
+    }
+
+    private void preTraversal(Node root) {
+        if(root == null){
+            return;
+        }
+        System.out.println(root.e);
+        this.preTraversal(root.left);
+        this.preTraversal(root.right);
+    }
+
+    /**
+     * 中序遍历
+     */
+    public void midTraversal(){
+        this.midTraversal(root);
+    }
+
+    private void midTraversal(Node root) {
+        if(root == null){
+            return;
+        }
+         this.midTraversal(root.left);
+        System.out.println(root.e);
+         this.midTraversal(root.right);
+    }
+
+    /**
+     * 后序遍历
+     */
+    public void afterTraversal(){
+        this.afterTraversal(root);
+    }
+
+    private void afterTraversal(Node root) {
+        if(root == null){
+            return ;
+        }
+        this.midTraversal(root.left);
+        this.midTraversal(root.right);
+        System.out.println(root.e);
+    }
 }
