@@ -2,6 +2,8 @@ package com.example.algorithm.Demo;
 
 import com.example.algorithm.dataStructure.Array;
 
+import java.sql.SQLOutput;
+
 /**
  * 专门用来测试Array
  */
@@ -16,6 +18,6 @@ public class ArrayTest {
             array.removeAt(0);
         }
         System.out.println(array);
-
+        System.out.println(Integer.MAX_VALUE);
     }
 }
