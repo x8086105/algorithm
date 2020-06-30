@@ -16,7 +16,19 @@ public class BSTTest {
         bst.midTraversal();
         System.out.println("-------------");
         bst.afterTraversal();
+        System.out.println("-------------");
+        bst.preTraversalWithoutRecursion();
+        System.out.println("-------------");
+        bst.breadthTraversal();
+        System.out.println("-------------");
+        bst.removeMin();
+        bst.breadthTraversal();
+        System.out.println("-------------");
+        bst.removeMax();
+        bst.breadthTraversal();
+        System.out.println("-------------");
+        System.out.println(bst.minimum());
+        System.out.println("-------------");
+        System.out.println(bst.maximum());
     }
-
-
 }
