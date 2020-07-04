@@ -170,6 +170,13 @@ public class Array<E> {
         data = newData;
     }
 
+    public void swap(int index, int parent) {
+        if(index < 0 || parent < 0 || index >= size || parent >= size){
+            E e = data[index];
+            data[index] = data[parent];
+            data[parent] = e;
+        }
+    }
     @Override
     public String toString() {
         StringBuilder  dataStr = new StringBuilder("[");
