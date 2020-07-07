@@ -28,6 +28,14 @@ public class Array<E> {
         this.data = (E[]) new Object[capacity];
         this.size = 0;
     }
+    public Array(E [] arr){
+
+        this.data = (E[]) new Object[arr.length];
+        for(int i = 0;i<arr.length;i++){
+            data[i] = arr[i];
+        }
+        size = arr.length;
+    }
 
     /**
      * 获取该数组中有多少个元素
@@ -171,7 +179,7 @@ public class Array<E> {
     }
 
     public void swap(int index, int parent) {
-        if(index < 0 || parent < 0 || index >= size || parent >= size){
+        if(index >= 0 && parent >= 0 && index < size && parent < size){
             E e = data[index];
             data[index] = data[parent];
             data[parent] = e;

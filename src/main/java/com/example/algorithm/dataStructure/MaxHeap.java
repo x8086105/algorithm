@@ -15,6 +15,17 @@ public class MaxHeap<E extends Comparable<E>>{
         data = new Array<>();
     }
 
+    /**
+     * 使用heapify的方式将一个数组元素添加到堆元素中
+     * @param arr
+     */
+    public MaxHeap(E[] arr){
+        data = new Array<>(arr);
+        for(int i = parent(data.getSize() - 1);i>=0;i--){
+            siftDown(i);
+        }
+    }
+
     public int getSize(){
         return data.getSize();
     }
@@ -74,37 +85,65 @@ public class MaxHeap<E extends Comparable<E>>{
             index = this.parent(index);
         }
     }
+    public E findMax() {
+        if(data.getSize() == 0){
+            throw new IllegalArgumentException("can not findMax when heap is empty");
+        }
+        return data.get(0);
+
+    }
 
     /**
      * 从堆中取出最大元素
+     * 下沉元素不一定下沉到数组的最后一个元素，
+     * 所以这里应该直接删除
      * @return
      */
     public E extractMax(){
-        E maxE = data.get(0);
+        E maxE = findMax();
+        data.swap(0,data.getSize()-1);
+        data.removeLast();
         this.siftDown(0);
         return maxE;
     }
 
+
     /**
      * 获取其左孩子跟右孩子，然后取较大的跟该元素进行替换，直到左右
-     * @param i
+     * @param k
      */
-    private void siftDown(int i) {
-        while (this.leftChild(i) <= getSize() || this.rightChild(i) <= getSize()){
-            if(this.leftChild(i) > getSize()){
-                //当前元素跟右孩子进行交换
-                data.swap(i,this.rightChild(i));
-                continue;
+    private void siftDown(int k) {
+        while (this.leftChild(k) < getSize()){
+            int j = leftChild(k);
+//            E  leftE = data.get(j);
+//            E curE = data.get(k);
+            //右孩子不为空 并且右孩子大于左孩子
+            if(j + 1 < data.getSize() &&
+                    data.get(j + 1).compareTo(data.get(j))> 0 ) {
+                j = rightChild(k);
             }
-            if(this.rightChild(i) > getSize()){
-                //当前元素跟右孩子进行交换
-                data.swap(i,this.leftChild(i));
-                continue;
+            //此时j是左右孩子中最大的
+            if(data.get(k).compareTo(data.get(j))>=0){
+                break;
             }
-            int exchangeIndex = data.get(leftChild(i)).compareTo(data.get(rightChild(i))) >0?leftChild(i) : rightChild(i);
-            data.swap(i,exchangeIndex);
+            data.swap(k,j);
+            k = j;
         }
-        data.removeLast();
     }
 
+    /**
+     * 替换最大元素，并且返回最大元素
+     * @param e
+     * @return
+     */
+    public E replace(E e){
+        E maxE = findMax();
+        data.set(0,e);
+        this.siftDown(0);
+        return maxE;
+    }
+    @Override
+    public String toString() {
+        return data.toString();
+    }
 }
