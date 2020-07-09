@@ -154,7 +154,7 @@ public class Array<E> {
      * @param e
      */
     public void set(int position,E e){
-        if(position <0||position>=size){
+        if(position < 0 || position >= size){
             throw new IllegalArgumentException("get failed.Require index >=0 and index<size");
         }
         data[position] = e;

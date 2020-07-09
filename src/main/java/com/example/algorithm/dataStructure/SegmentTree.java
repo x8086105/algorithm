@@ -20,6 +20,7 @@ public class SegmentTree<E> {
             data[i] = arr[i];
         }
         tree = (E[]) new Object[4 * arr.length];
+        //开始构建线段树
         buildSegmentTree(0,0,data.length - 1);
     }
 
@@ -81,6 +82,44 @@ public class SegmentTree<E> {
         return merger.merge(leftResult,rightRequest);
     }
 
+    /**
+     * 将index位置的元素更新为e
+     * @param index
+     * @param e
+     */
+    public void set(int index,E e) {
+        if(index < 0 || index >= data.length){
+            throw new IllegalArgumentException("Index is illegal");
+        }
+        data[index] = e;
+        set(0,0,data.length - 1,index,e);
+    }
+
+    /**
+     * 在treeIndex为根的线段树中更新index的值为e
+     * @param treeIndex
+     * @param l
+     * @param r
+     * @param index
+     * @param e
+     */
+    private void set(int treeIndex,int l,int r,int index,E e){
+        if(l == r){
+            tree[treeIndex] = e;
+            return;
+        }
+        int mid = l + (r - l) / 2;
+        int leftChildIndex = leftChild(treeIndex);
+        int rightChildIndex = rightChild(treeIndex);
+        if(index <= mid){
+            //更新左边
+            set(leftChildIndex,l,mid,index,e);
+        }else if (index >= mid+1){
+            //更新右边
+            set(rightChildIndex,mid + 1,r,index,e);
+        }
+        tree[treeIndex] = merger.merge(tree[leftChildIndex],tree[rightChildIndex]);
+    }
     /**
      * 返回数组的长度
      * @return
