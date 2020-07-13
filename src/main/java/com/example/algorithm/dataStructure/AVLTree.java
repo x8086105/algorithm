@@ -1,28 +1,46 @@
 package com.example.algorithm.dataStructure;
 
+import java.util.ArrayList;
+
 /**
  * 基于二分搜索树的Map
  * @param <K>
  * @param <V>
  */
-public class BSTMap<K extends Comparable<K>,V> implements Map<K,V>{
+public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
     private class Node{
         public K key;
         public V value;
         public Node left,right;
+        //该节点的高度
+        public int height;
+
         public Node(K k,V v){
             this.key = k;
             this.value = v;
             left = null;
             right = null;
+            height = 1;
         }
     }
     private Node root;
     private int size;
 
-    public BSTMap(){
+    public AVLTree(){
         root = null;
         size = 0;
+    }
+
+    /**
+     * 获得一个节点的高度
+     * @param node
+     * @return
+     */
+    private int getHeight(Node node){
+        if(node == null){
+            return 0;
+        }
+        return node.height;
     }
 
     @Override
@@ -44,8 +62,138 @@ public class BSTMap<K extends Comparable<K>,V> implements Map<K,V>{
             //key.compareTo(node.key) == 0
             node.value = value;
         }
+        //对当前node 的高度值进行更新
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+
+        //计算当前节点的平衡因子
+        int balanceFactor = getBalanceFactor(node);
+        if(Math.abs(balanceFactor) > 1 && getBalanceFactor(node.left) >= 0){
+            //此时该树不是平衡二叉树 并且倾向于左边，所以要进行右旋转
+            return rightRotate(node);
+        }
+        if(Math.abs(balanceFactor) < -1 && getBalanceFactor(node.right) <= 0){
+            return leftRotate(node);
+        }
 
         return node;
+    }
+
+    /**
+     * 进行右旋转，返回旋转之后平衡的根节点
+     * @param y
+     * @return
+     * 始终满足的条件为  T1<z<T2<x<T3<y<T4
+     *          y                                       x
+     *         / \                                   /     \
+     *        x   T4                                z       y
+     *       / \               ----------->       /   \    /  \
+     *      z   T3                              T1     T2 T3   T4
+     *     / \
+     *    T1  T2
+     *
+     */
+    private Node rightRotate(Node y) {
+        Node x = y.left;
+        Node T3 = x.right;
+
+        x.right = y;
+        y.left = T3;
+
+        //更新高度值
+        //从上图可以看出 需要更新的只有x y的两个高度值
+        //首先，先更新y的高度值，再更新x的高度值
+        y.height = Math.max(getHeight(y.left),getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.right),getHeight(x.left)) + 1;
+        return x;
+    }
+
+    /**
+     * 进行左旋转
+     * 始终满足的条件为  T1<z<T2<x<T3<y<T4
+     *          y                                       x
+     *         / \                                   /     \
+     *        T1   x                                y       z
+     *            / \          ----------->       /   \    /  \
+     *           T2  z                          T1     T2 T3   T4
+     *              / \
+     *             T3  T4
+     * @param y
+     * @return
+     */
+    private Node leftRotate(Node y){
+        Node x = y.right;
+        Node T2 = x . left;
+
+        x.left = y;
+        y.right = T2;
+
+        //更新高度值
+        //从上图可以看出 需要更新的只有x y的两个高度值
+        //首先，先更新y的高度值，再更新x的高度值
+        y.height = Math.max(getHeight(y.left),getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.right),getHeight(x.left)) + 1;
+        return x;
+    }
+
+    /**
+     * 获取一个node的平衡因子
+
+     * @param node
+     * @return
+     */
+    private int getBalanceFactor(Node node){
+        if(node == null){
+            return 0;
+        }
+        return getHeight(node.left) - getHeight(node.right);
+    }
+
+    /**
+     * 判断一棵树是否是二分搜索树
+     * 中序遍历 放到一个集合中，然后判断集合是否是一个升序的集合
+     * 即可
+     * @return
+     */
+    private boolean isBST(){
+        ArrayList<K> keys = new ArrayList<>();
+        inOrder(root,keys);
+        //遍历keys 判断是否是一个升序的数组
+        for(int i = 1; i < keys.size();i++){
+            if(keys.get(i).compareTo( keys.get(i - 1)) < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void inOrder(Node node, ArrayList<K> keys) {
+        if(node == null){
+            return;
+        }
+        inOrder(node.left,keys);
+        keys.add(node.key);
+        inOrder(node.right,keys);
+    }
+
+    /**
+     * 判断当前树是不是一个平衡二叉树
+     * 定义：任意一个节点的左右子树的高度差不能超过1
+     * @return
+     */
+    public boolean isBalanced(){
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node node) {
+        if(node == null){
+            return true;
+        }
+        int balanceFactory = getBalanceFactor(node);
+        if(Math.abs(balanceFactory) > 1){
+            return false;
+        }
+        return isBalanced(node.right) && isBalanced(node.left);
+
     }
 
     @Override
