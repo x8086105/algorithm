@@ -67,11 +67,26 @@ public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
 
         //计算当前节点的平衡因子
         int balanceFactor = getBalanceFactor(node);
-        if(Math.abs(balanceFactor) > 1 && getBalanceFactor(node.left) >= 0){
+        //LL模式
+        if(balanceFactor > 1 && getBalanceFactor(node.left) >= 0){
             //此时该树不是平衡二叉树 并且倾向于左边，所以要进行右旋转
             return rightRotate(node);
         }
-        if(Math.abs(balanceFactor) < -1 && getBalanceFactor(node.right) <= 0){
+        //RR模式
+        if(balanceFactor < -1 && getBalanceFactor(node.right) <= 0){
+            return leftRotate(node);
+        }
+        //LR模式 首先不平衡，其次左子树的高度小于右子树的高度，证明新添加的节点
+        //在整棵树的左子树上，其叶子落进了右子树上
+        if(balanceFactor > 1 && getBalanceFactor(node.left) < 0 ){
+            //处理方式先左旋转 再右旋转
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        if(balanceFactor < -1 && getBalanceFactor(node.right) > 0 ){
+            //处理方式先左旋转 再右旋转
+            node.right = rightRotate(node.right);
             return leftRotate(node);
         }
 
