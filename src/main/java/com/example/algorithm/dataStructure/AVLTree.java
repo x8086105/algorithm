@@ -66,25 +66,25 @@ public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
 
         //计算当前节点的平衡因子
-        int balanceFactor = getBalanceFactor(node);
+        int balanceFactory = getBalanceFactor(node);
         //LL模式
-        if(balanceFactor > 1 && getBalanceFactor(node.left) >= 0){
+        if(balanceFactory > 1 && getBalanceFactor(node.left) >= 0){
             //此时该树不是平衡二叉树 并且倾向于左边，所以要进行右旋转
             return rightRotate(node);
         }
         //RR模式
-        if(balanceFactor < -1 && getBalanceFactor(node.right) <= 0){
+        if(balanceFactory < -1 && getBalanceFactor(node.right) <= 0){
             return leftRotate(node);
         }
         //LR模式 首先不平衡，其次左子树的高度小于右子树的高度，证明新添加的节点
         //在整棵树的左子树上，其叶子落进了右子树上
-        if(balanceFactor > 1 && getBalanceFactor(node.left) < 0 ){
+        if(balanceFactory > 1 && getBalanceFactor(node.left) < 0 ){
             //处理方式先左旋转 再右旋转
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
-        if(balanceFactor < -1 && getBalanceFactor(node.right) > 0 ){
+        if(balanceFactory < -1 && getBalanceFactor(node.right) > 0 ){
             //处理方式先左旋转 再右旋转
             node.right = rightRotate(node.right);
             return leftRotate(node);
@@ -225,13 +225,15 @@ public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
         if(node == null){
             return null;
         }
+        //用来存储需要返回的节点的信息
+        Node retNode;
         if(node.key.compareTo(key) > 0){
             //从左边进行移除
             node.left = remove(node.left,key);
-            return node;
+            retNode = node;
         }else if(node.key.compareTo(key) < 0){
             node.right = remove(node.right,key);
-            return node;
+            retNode = node;
         }else{
             //待删除的节点，左子树为null的情况
             if(node.left == null){
@@ -239,23 +241,51 @@ public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
                 Node rightNode = node.right;
                 node.right = null;
                 size --;
-                return rightNode;
-            }
-            if(node.right == null){
+                retNode = rightNode;
+            }else if(node.right == null){
                 Node leftNode = node.left;
                 node.left = null;
                 size --;
-                return leftNode;
+                retNode = leftNode;
+            }else{
+                //找到前驱节点
+                Node successor = maximum(node.left);
+                successor.left = remove(node.left,key);
+                successor.right = node.right;
+                node.right = node.left = null;
+                retNode = successor;
             }
-            //找到前驱节点
-            Node successor = maximum(node.left);
-            successor.left = removeMax(node.left);
-            successor.right = node.right;
-            node.right = node.left = null;
-            return successor;
-
+        }
+        //节点已经删除完成，需要调整节点的高度
+        if(retNode == null){
+            return null;
+        }
+        retNode.height = Math.max(getHeight(retNode.right), getHeight(retNode.left)) + 1;
+        //计算平衡因子
+        int balanceFactory = getBalanceFactor(retNode);
+        //平衡维护 LL
+        if(balanceFactory > 1 && getBalanceFactor(retNode.left) >= 0){
+            return rightRotate(retNode);
+        }
+        //RR
+        if(balanceFactory < -1 && getBalanceFactor(retNode.right) <= 0){
+            return leftRotate(retNode);
+        }
+        //LR模式 首先不平衡，其次左子树的高度小于右子树的高度，证明新添加的节点
+        //在整棵树的左子树上，其叶子落进了右子树上
+        if(balanceFactory > 1 && getBalanceFactor(retNode.left) < 0 ){
+            //处理方式先左旋转 再右旋转
+            retNode.left = leftRotate(retNode.left);
+            return rightRotate(retNode);
         }
 
+        if(balanceFactory < -1 && getBalanceFactor(retNode.right) > 0 ){
+            //处理方式先左旋转 再右旋转
+            retNode.right = rightRotate(retNode.right);
+            return leftRotate(retNode);
+        }
+
+        return retNode;
     }
     public Node removeMax(){
         Node maxmum = this.maximum();
