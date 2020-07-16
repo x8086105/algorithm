@@ -137,7 +137,7 @@ public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
      */
     private Node leftRotate(Node y){
         Node x = y.right;
-        Node T2 = x . left;
+        Node T2 = x.left;
 
         x.left = y;
         y.right = T2;
