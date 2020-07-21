@@ -1,5 +1,7 @@
 package com.example.algorithm.dataStructure;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 /**
  * 红黑树
  */
@@ -30,6 +32,37 @@ public class RBTree<K extends Comparable<K>,V> {
         root = null;
         size = 0;
     }
+
+    private Node leftRotate(Node node){
+        Node x = node.right;
+        node.right = x.left;
+        x.left = node;
+
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    private Node rightRotate(Node node){
+        Node x = node.left;
+        node.left = x.right;
+        x.right = node;
+
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    /**
+     * 颜色翻转
+     * @param node
+     */
+    private void filpColors(Node node){
+        node.color = RED;
+        node.left.color = BLACK;
+        node.right.color = BLACK;
+    }
+
 
     private boolean isRed(Node node){
         if(node == null){
