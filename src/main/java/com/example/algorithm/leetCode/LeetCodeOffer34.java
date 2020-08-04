@@ -29,15 +29,17 @@ public class LeetCodeOffer34 {
         return restList;
     }
     private static void recur(TreeNode node , int sum){
-        if(node == null) return;
+        if(node == null) {
+            return;
+        }
         result.add(node.val);
         sum -= node.val;
-        if(sum == 0 && node.left == null && node.right == null)
+        if(sum == 0 && node.left == null && node.right == null){
             restList.add(new LinkedList<>(result));
+        }
         recur(node.left, sum);
         recur(node.right, sum);
         result.removeLast();
-
     }
 
 
