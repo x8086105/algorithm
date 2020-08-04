@@ -1,13 +1,12 @@
 package com.example.algorithm.leetCode;
 
-import com.google.common.collect.Lists;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-public class LeetCodeOffer32 {
+public class LeetCodeOffer32_1 {
 
     public static void main(String[] args) {
 
@@ -44,4 +43,5 @@ public class LeetCodeOffer32 {
         TreeNode right;
         TreeNode(int x) { val = x; }
     }
+
 }
