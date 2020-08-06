@@ -54,7 +54,7 @@ public class AVLTree<K extends Comparable<K>,V> implements Map<K,V>{
             return new Node(key,value);
         }
         if(node.key.compareTo(key) > 0){
-            //添加到右边
+            //添加到左边 当前节点比要插入的节点大的话 该节点插入当前节点的左孩子中
             node.left = add(node.left,key,value);
         }else if(node.key.compareTo(key) < 0){
             node.right = add(node.right,key,value);

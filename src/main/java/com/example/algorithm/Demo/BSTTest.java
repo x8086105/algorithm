@@ -30,5 +30,9 @@ public class BSTTest {
         System.out.println(bst.minimum());
         System.out.println("-------------");
         System.out.println(bst.maximum());
+
+        System.out.println("-------------");
+        bst.remove(11);
+        bst.preTraversal();
     }
 }

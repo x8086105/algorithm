@@ -275,7 +275,7 @@ public class BST<E extends Comparable<E>> {
 
     /**
      * 删除以node为根的二分搜索树中的值为e 的节点
-     * 返回删除节点后的二分搜索树的跟
+     * 返回删除节点后的二分搜索树的根
      * @param node
      * @param e
      * @return
