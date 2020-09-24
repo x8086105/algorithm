@@ -1,5 +1,7 @@
 package com.example.algorithm.leetCode;
 
+import com.sun.webkit.graphics.WCPathIterator;
+
 import java.util.Arrays;
 
 /**
@@ -40,9 +42,9 @@ import java.util.Arrays;
 public class LeetCode1535 {
 
     public static void main(String[] args) {
-        int []nums = {1,25,35,42,68,70};
-        int k  = 1;
-        int max  = getWinner(nums,k);
+        int []nums = {2,1,3,5,4,6,7};
+        int k  = 2;
+        int max  = getWinner2(nums,k);
         System.out.println(max);
     }
     public static int getWinner(int[] arr, int k) {
@@ -75,5 +77,33 @@ public class LeetCode1535 {
             }
             return arr[arr.length - 1];
         }
+    }
+
+    /**
+     * 官方题解
+     * @param arr
+     * @param k
+     * @return
+     */
+    public static int getWinner2(int[] arr, int k) {
+        int max = Math.max(arr[0], arr[1]);
+        if(k == 1){
+            return max;
+        }
+        int count = 0;
+        for(int i = 1;i < arr.length; i ++){
+            int cur = arr[i];
+            if(cur > max){
+                max = cur;
+                count = 1;
+            }else {
+                count ++ ;
+                if(count == k){
+                    return max;
+                }
+            }
+        }
+        return max;
+
     }
 }
