@@ -46,13 +46,13 @@ public class LeetCode113 {
     }
 
     public static List<List<Integer>> pathSum(TreeNode root, int sum) {
-//        List<List<Integer>> result = new ArrayList<>();
-//        List<Integer> items = new ArrayList<>();
-//        path(result,items,root,0,sum);
-//        return result;
         List<List<Integer>> result = new ArrayList<>();
-        dfs(root, sum, new ArrayList<>(), result);
+        List<Integer> items = new ArrayList<>();
+        path(result,items,root,0,sum);
         return result;
+//        List<List<Integer>> result = new ArrayList<>();
+//        dfs(root, sum, new ArrayList<>(), result);
+//        return result;
     }
 
     public static void path(List<List<Integer>> list, List<Integer> items,TreeNode root,int curSum,int sum){
