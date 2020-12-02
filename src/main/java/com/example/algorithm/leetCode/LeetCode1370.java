@@ -76,14 +76,14 @@ public class LeetCode1370 {
             if(i%2 == 0){
                 for(int j = 0;j < 26;j++){
                     if(array[j] > 0){
-                        sb.append((char)(j + 97));
+                        sb.append((char)(j + 'a'));
                         array[j] --;
                     }
                 }
             }else{
                 for(int j = 25;j >= 0;j--){
                     if(array[j] > 0){
-                        sb.append((char)(j + 97));
+                        sb.append((char)(j + 'a'));
                         array[j] --;
                     }
                 }
