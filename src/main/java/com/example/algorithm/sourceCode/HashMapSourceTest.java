@@ -25,6 +25,7 @@ public class HashMapSourceTest {
             map.put(i + "", i);
         }
 
+
     }
 
     static int tableSizeFor(int cap) {
@@ -55,5 +56,6 @@ public class HashMapSourceTest {
         System.out.println("result5:" + result5);
         n |= n >>> 16;
         return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+
     }
 }
