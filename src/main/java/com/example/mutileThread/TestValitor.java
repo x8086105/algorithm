@@ -4,19 +4,18 @@ import org.apache.poi.ss.formula.functions.T;
 
 public class TestValitor {
 
-    private  volatile static int i = 0;
-    private final static Object object = new Object();
+    private  static int i = 0;
+
+    private  static Object object = null;
+
     private static volatile boolean stop = false;
+
     public static void main(String[] args) {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (object){
-                    i = 1;
-                    i = 2;
-                    i = 4;
-                    stop = true;
-                }
+               object = new Object();
+                stop = true;
                 System.out.println("执行完了:" + stop);
             }
         },"thread1");
@@ -24,7 +23,7 @@ public class TestValitor {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (!stop){
+                while (object == null){
 
                 }
                 System.out.println("stop!");
