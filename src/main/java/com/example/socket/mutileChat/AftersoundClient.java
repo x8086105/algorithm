@@ -50,11 +50,7 @@ public class AftersoundClient {
                 byteBuffer.clear();
                 System.out.println(echo);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (IOException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
         } finally {
             close(clientChannel);
