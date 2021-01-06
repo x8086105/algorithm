@@ -125,7 +125,7 @@ public class ChatClient {
         }
     }
     public void send(String msg)throws  IOException {
-        if (msg.isEmpty()) {
+        if (StringUtils.isBlank(msg)) {
             return;
         }
 
