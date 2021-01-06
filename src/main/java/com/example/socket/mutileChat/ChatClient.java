@@ -103,7 +103,7 @@ public class ChatClient {
     private void handlers(SelectionKey key) throws IOException {
         //CONNECT事件，----连接事件
         if(key.isConnectable()){
-            SocketChannel client = (SocketChannel) key.channel();
+//            SocketChannel client = (SocketChannel) key.channel();
             if(client.isConnectionPending()){
                 client.finishConnect();
                 log.info("客户端【{}】已连接",client.socket().getLocalPort());
@@ -114,7 +114,7 @@ public class ChatClient {
         }
         //READ事件----读事件
         else if(key.isReadable()){
-            SocketChannel client = (SocketChannel) key.channel();
+//            SocketChannel client = (SocketChannel) key.channel();
             String msg = receive(client);
             if(StringUtils.isBlank(msg)){
                 //服务器端意外关闭了这个通道

@@ -62,7 +62,7 @@ public class ChatServer {
             //绑定本地端口
             server.bind(new InetSocketAddress(port));
             selector = Selector.open();
-            //注册接收事件到选择器上
+            //注册接收事件到选择器上 监听...
             server.register(selector, SelectionKey.OP_ACCEPT);
             log.info("启动服务器，监听端口:{}...", port);
             while (true) {
@@ -86,6 +86,7 @@ public class ChatServer {
             ServerSocketChannel server = (ServerSocketChannel) selectionKey.channel();
             SocketChannel client = server.accept();
             client.configureBlocking(false);
+            //开始进行监听read事件
             client.register(selector,SelectionKey.OP_READ);
             log.info("{}已连接",getClientName(client));
         }
@@ -129,6 +130,7 @@ public class ChatServer {
             if(key.isValid() && !client.equals(connectedChannel)){
                 wBuffer.clear();
                 wBuffer.put(charset.encode(getClientName(client) + ":" + msg));
+                //写模式转变成读模式
                 wBuffer.flip();
                 while (wBuffer.hasRemaining()){
                     ((SocketChannel)connectedChannel).write(wBuffer);
@@ -142,11 +144,13 @@ public class ChatServer {
         return "客户端【"+ client.socket().getPort() + "】";
     }
 
-    private String receive(SocketChannel client) throws IOException {
+    private String  receive(SocketChannel client) throws IOException {
         rBuffer.clear();
+        //将数据读到rBuffer中
         while (client.read(rBuffer) > 0) {
 
         }
+        //从写模式转变成读模式
         rBuffer.flip();
         return String.valueOf(charset.decode(rBuffer));
     }
