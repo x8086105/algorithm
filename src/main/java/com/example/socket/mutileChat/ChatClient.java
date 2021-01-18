@@ -28,7 +28,7 @@ public class ChatClient {
     /**
      * 默认缓存的大小
      */
-    private static final int BUFFER = 1024;
+    private static final int BUFFER = 1;
     /**
      * 客户端的channel
      */
@@ -110,6 +110,9 @@ public class ChatClient {
                 //处理用户输入
                 new Thread(new UserInputHandler(this)).start();
             }
+            //如果同时想要监听多个
+            //就可以这样实现 int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
+            //然后 interestSet 可以作为以下这个注册方法的第二个函数
             client.register(selector,SelectionKey.OP_READ);
         }
         //READ事件----读事件

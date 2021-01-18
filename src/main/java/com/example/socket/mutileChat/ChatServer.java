@@ -32,7 +32,7 @@ public class ChatServer {
     /**
      * 默认缓存的大小
      */
-    private static final int BUFFER = 1024;
+    private static final int BUFFER = 1;
     /**
      * 选择器，也称为多路复用
      */
@@ -69,6 +69,7 @@ public class ChatServer {
                 selector.select();
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 for (SelectionKey selectionKey : selectionKeys) {
+
                     handlers(selectionKey);
                 }
                 selectionKeys.clear();
@@ -91,6 +92,7 @@ public class ChatServer {
             log.info("{}已连接",getClientName(client));
         }
         //READ事件，客户端发送了消息
+        //底层采用了 与运算boolean isInterestedInRead    = readyOps & SelectionKey.OP_READ;
         else if (selectionKey.isReadable()){
             SocketChannel client = (SocketChannel) selectionKey.channel();
             String msg = receive(client);
