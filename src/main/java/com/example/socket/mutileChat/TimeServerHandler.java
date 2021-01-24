@@ -1,16 +1,13 @@
 package com.example.socket.mutileChat;
 
-import com.sun.org.apache.regexp.internal.RE;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
-import java.util.Date;
 
-public class TimeServerHandler extends ChannelHandlerAdapter {
+public class TimeServerHandler extends ChannelInboundHandlerAdapter {
 
     private int counter;
 
