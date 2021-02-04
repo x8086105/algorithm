@@ -4,6 +4,9 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 
+/**
+ * 这不就是个反射么
+ */
 public class ImmutableObjectTest {
 
     public static void main(String[] args) throws IllegalAccessException {
