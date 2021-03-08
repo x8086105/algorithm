@@ -8,8 +8,8 @@ public class HashMapSourceTest {
 
     public static void main(String[] args) {
         test1();
-//        int c = tableSizeFor(18);
-//        System.out.println(c);
+        int c = tableSizeFor(18);
+        System.out.println(c);
         System.out.println("ABCDEa123abc".hashCode());
 
         System.out.println("ABCDFB123abc".hashCode());
@@ -20,10 +20,8 @@ public class HashMapSourceTest {
      */
 
     public static void test1(){
-        HashMap<String,Integer> map = new HashMap<>();
-        for (int i = 0; i < 20; i++) {
-            map.put(i + "", i);
-        }
+        HashMap<String,Integer> map = new HashMap<>(0);
+
 
 
     }
