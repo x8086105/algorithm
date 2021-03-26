@@ -13,6 +13,8 @@ public class HashMapSourceTest {
         System.out.println("ABCDEa123abc".hashCode());
 
         System.out.println("ABCDFB123abc".hashCode());
+        int i = 0000000000000011;
+        System.out.println(i);
     }
 
     /**
@@ -20,7 +22,10 @@ public class HashMapSourceTest {
      */
 
     public static void test1(){
-        HashMap<String,Integer> map = new HashMap<>(0);
+        int n = 16;
+        int hash = 31;
+        int i = (n - 1) & hash;
+        System.out.println("%之后"+ i);
 
 
 
