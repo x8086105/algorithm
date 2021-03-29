@@ -15,6 +15,8 @@ public class HashMapSourceTest {
         System.out.println("ABCDEa123abc".hashCode());
 
         System.out.println("ABCDFB123abc".hashCode());
+        int i = 0000000000000011;
+        System.out.println(i);
     }
 
     private static void testConcurrent() {
@@ -31,11 +33,11 @@ public class HashMapSourceTest {
 
 
     public static void test1(){
-        HashMap<String,Integer> map = new HashMap<>(0);
-        map.put("test",1);
 
-        map.put("test1",2);
-
+        int n = 16;
+        int hash = 31;
+        int i = (n - 1) & hash;
+        System.out.println("%之后"+ i);
 
 //        int s = (1 < MAXIMUM_CAPACITY && 0.75d < (float)MAXIMUM_CAPACITY ?
 //                (int)0.75d : Integer.MAX_VALUE);

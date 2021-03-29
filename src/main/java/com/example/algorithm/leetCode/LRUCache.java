@@ -3,72 +3,71 @@ package com.example.algorithm.leetCode;
 import java.util.HashMap;
 
 /**
-最近最少使用，首先得要用链表，用来进行元素的移动，使用过的放到对首，没有的放到队尾
-**/
-public class LRUCache {
-    private int capacity;
-    private HashMap<Integer,Node> tab;
-    private Node head = new Node();
-    private Node tail = new Node();
 
+ * @author 1
+ */
+public class LRUCache {
+
+    private HashMap<Integer,ListNode> tab;
+
+    private int capacity;
+
+    private ListNode head;
+
+    private ListNode tail;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
         tab = new HashMap<>(capacity);
+        head = new ListNode();
+        tail = new ListNode();
         head.next = tail;
         tail.pre = head;
     }
-    //获取元素了
+    
     public int get(int key) {
-        Node v = tab.get(key);
-        if(v == null){
+       ListNode n = tab.get(key);
+        if(n == null){
             return -1;
         }
-        //移动当前元素到对首
-        //首先 自己先独立出来
-        moveToHead(v);
-        return v.value;
+        moveToHead(n);
+        return n.value;
     }
     
     public void put(int key, int value) {
-        //首先判断是否超过容量，如果超过，移除队尾元素，tail 指向队尾
-        Node v = tab.get(key);
-        if(v == null){
-            Node node = new Node(key,value);
-            tab.put(key,node);
-            addToHead(node);
-            if(tab.size() > capacity){
-                Node tail = removeTail();
-                // 删除哈希表中对应的项
-                tab.remove(tail.key);
-            }
-        }else{
-            v.value = value;
-            moveToHead(v);
+        ListNode node = new ListNode(key,value);
+        ListNode existsNode = tab.get(node.key);
+        if(existsNode != null){
+            existsNode.value = node.value;
+            moveToHead(existsNode);
+            return;
         }
-
+        addToHead(node);
+        tab.put(node.key,node);
+        if(capacity < tab.size()){
+            //移除最后一个元素
+            tab.remove(tail.pre.key);
+            removeNode(tail.pre);
+        }
     }
-
-    private void addToHead(Node node) {
-        node.pre = head;
+    
+    /**
+    将该节点添加到队列的头部
+    **/
+    private void addToHead(ListNode node){
+       node.pre = head;
         node.next = head.next;
         head.next.pre = node;
         head.next = node;
     }
 
-    private void removeNode(Node node) {
+
+    /**
+    将该节点从队列中移除
+    **/
+    private void removeNode(ListNode node){
         node.pre.next = node.next;
         node.next.pre = node.pre;
-    }
-
-    private void moveToHead(Node node) {
-        removeNode(node);
-        addToHead(node);
-    }
-    private Node removeTail() {
-        Node res = tail.pre;
-        removeNode(res);
-        return res;
     }
 
 
@@ -115,4 +114,46 @@ public class LRUCache {
         cache.get(4);
 
     }
+
+    /**
+    获取最后末尾的元素
+    **/
+    private ListNode getTailNode(){
+        return tail.pre;
+    }
+    /**
+    移动到队首
+    **/
+    private void moveToHead(ListNode node){
+        removeNode(node);
+        addToHead(node);
+    }
+
+    private class ListNode {
+
+        private int key;
+
+        private int value;
+
+        private ListNode pre;
+
+        private ListNode next;
+
+        public ListNode(){
+
+        }
+
+        public ListNode(int key,int value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+
 }
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
