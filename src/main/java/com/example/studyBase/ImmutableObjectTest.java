@@ -10,14 +10,22 @@ import java.text.SimpleDateFormat;
 public class ImmutableObjectTest {
 
     public static void main(String[] args) throws IllegalAccessException {
-        ImmutableObject o = new ImmutableObject(10);
-        System.out.println(o.getValue());
-        Class c =  o.getClass();
-        Field[] fields = c.getDeclaredFields();
-        for (Field f: fields){
-            f.setAccessible(true);
-            f.set(o,5);
-        }
-        System.out.println(o.getValue());
+
+
+        Integer max = Integer.MAX_VALUE;
+        System.out.println(max + 2);
+        
+
+        Integer min = Integer.MIN_VALUE;
+        System.out.println(min);
+//        ImmutableObject o = new ImmutableObject(10);
+//        System.out.println(o.getValue());
+//        Class c =  o.getClass();
+//        Field[] fields = c.getDeclaredFields();
+//        for (Field f: fields){
+//            f.setAccessible(true);
+//            f.set(o,5);
+//        }
+//        System.out.println(o.getValue());
     }
 }
