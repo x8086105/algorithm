@@ -83,6 +83,7 @@ public class SnowflakeIdGenerator {
         lastTimeStamp = current;
         long time = (current - START_TIME) << TIMESTAMP_LEFT_SHIFT;
         long workId = this.workerId << APP_HOST_ID_SHIFT;
+        //存到一个map中 ，覆盖当前毫秒的值，
         return time | workId | sequence;
     }
 
