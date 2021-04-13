@@ -22,6 +22,14 @@ public class ImmutableObjectTest {
     private static final int TERMINATED =  3 << COUNT_BITS;
 
     public static void main(String[] args) throws IllegalAccessException {
+
+
+        Integer max = Integer.MAX_VALUE;
+        System.out.println(max + 2);
+        
+
+        Integer min = Integer.MIN_VALUE;
+        System.out.println(min);
 //        ImmutableObject o = new ImmutableObject(10);
 //        System.out.println(o.getValue());
 //        Class c =  o.getClass();
@@ -30,7 +38,7 @@ public class ImmutableObjectTest {
 //            f.setAccessible(true);
 //            f.set(o,5);
 //        }
-//        System.out.println(o.getValue());
+
 //        ConcurrentHashMap<Integer,String> hashMap = new ConcurrentHashMap<>();
 //        hashMap.size();
 //

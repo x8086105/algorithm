@@ -1,12 +1,14 @@
 package com.example.algorithm.sourceCode;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HashMapSourceTest {
 
     private static final int MAXIMUM_CAPACITY = 1<<30;
 
     public static void main(String[] args) {
+        testConcurrent();
         test1();
         int c = tableSizeFor(18);
         System.out.println(c);
@@ -17,16 +19,29 @@ public class HashMapSourceTest {
         System.out.println(i);
     }
 
+    private static void testConcurrent() {
+        //初始容量计算方式是  tableSizeFor(initialCapacity + initialCapacity/2 + 1)
+        ConcurrentHashMap<Integer,String> hashMap = new ConcurrentHashMap<>(20);
+        hashMap.put(1,"xxx");
+
+
+    }
+
     /**
      * 测试HashMap最大能放多少个元素
      */
 
+
     public static void test1(){
+
         int n = 16;
         int hash = 31;
         int i = (n - 1) & hash;
         System.out.println("%之后"+ i);
 
+//        int s = (1 < MAXIMUM_CAPACITY && 0.75d < (float)MAXIMUM_CAPACITY ?
+//                (int)0.75d : Integer.MAX_VALUE);
+//        System.out.println("xxxxx" + s);
 
 
     }

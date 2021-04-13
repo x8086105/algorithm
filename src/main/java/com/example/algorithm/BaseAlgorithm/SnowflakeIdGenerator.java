@@ -14,16 +14,24 @@ public class SnowflakeIdGenerator {
      */
     private static final int WORKER_ID_BITS = 13;
     /**
+     * 序列号，支持单节点每毫秒生成的最大ID数为1024
+     */
+    private static final int SEQUENCE_BITS = 10;
+    /**
      * 最大work id
      * -1 的补码（二进制所有位均为1）右移13位然后取反
+     * ~ 是按位取反
+     * 相當於 -1 ^(-1L << WORKER_ID_BITS)
+     * -1二进制表示全都是1 然后像右移动13个位置 跟-1进行异或
+     * 异或操作是 不同为1 相同为0
+     * 11111111000000
+     * 11111111111111
+     * 00000000111111
      */
     private static final long MAX_WORK_ID = ~(-1L << WORKER_ID_BITS);
 
     private static final long START_TIME = 1483200000000L;
-    /**
-     * 序列号，支持单节点每毫秒生成的最大ID数为1024
-     */
-    private static final int SEQUENCE_BITS = 10;
+
     /**
      * 最大序列号
      * -1的补码右移10位，然后取反
