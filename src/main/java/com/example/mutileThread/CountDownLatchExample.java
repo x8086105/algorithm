@@ -27,14 +27,24 @@ public class CountDownLatchExample {
             @Override
             public void run() {
                 for(int i = 1; i < 10;i++){
+                    Thread.sleep(100);
                     data = i;
                     latch.countDown();
-                    Thread.sleep(100);
                     System.out.println("xx");
                 }
             }
         });
+        Thread workerThread2 = new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+               latch.await();
+               System.out.println("workerThread2 操作......");
+            }
+        });
         workerThread.start();
+        workerThread2.start();
+
         latch.await();
         log.info("It's done, data={}",data);
     }
