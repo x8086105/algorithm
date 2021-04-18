@@ -5,7 +5,7 @@ import sun.reflect.generics.tree.Tree;
 import java.util.*;
 
 /**
- * 102. 二叉树的层序遍历
+ * 102. 二叉树的层序遍历(广度优先搜索算法)
  * 给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
  * <p>
  * <p>
@@ -54,11 +54,6 @@ public class LeetCode102 {
         }
         List<List<Integer>> result = new ArrayList<>();
         //通过层序遍历，获取路径
-        levelOrder(root, result);
-        return result;
-    }
-
-    private static void levelOrder(TreeNode root, List<List<Integer>> result) {
         ArrayDeque<TreeNode> queue = new ArrayDeque<>();
         queue.add(root);
         while (!queue.isEmpty()) {
@@ -76,8 +71,9 @@ public class LeetCode102 {
             }
             result.add(ls);
         }
-
+        return result;
     }
+
 
     public static void main(String[] args) {
         TreeNode treeNode = new TreeNode(3);
