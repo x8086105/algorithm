@@ -1,5 +1,9 @@
 package com.example.mutileThread;
 
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 public class ThreadPoolTest {
     private static final int COUNT_BITS = Integer.SIZE - 3;
     private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
@@ -19,5 +23,9 @@ public class ThreadPoolTest {
         System.out.println("TERMINATED: "+ TERMINATED);
 
         System.out.println("stop:"+ (int)Math.pow(2,29));
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(10,10,
+                1000,TimeUnit.SECONDS, new LinkedBlockingQueue<>(100));
+        executor.allowCoreThreadTimeOut(true);
     }
 }
