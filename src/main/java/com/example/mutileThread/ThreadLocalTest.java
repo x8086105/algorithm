@@ -7,7 +7,6 @@ public class ThreadLocalTest {
     public static void main(String[] args) throws InterruptedException {
 
         t.set(10);
-        Thread.sleep(300);
         Thread t1 = new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -19,6 +18,7 @@ public class ThreadLocalTest {
         });
         t1.start();
 
+        Thread.sleep(300);
         System.out.println("main 线程中的值是：" + t.get());
     }
 }
