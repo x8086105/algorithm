@@ -28,27 +28,24 @@ package com.example.algorithm.leetCode;
  */
 public class LeetCode236 {
 
-    private TreeNode ans = null;
 
-
-
-    private boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) return false;
-        boolean lson = dfs(root.left, p, q);
-        boolean rson = dfs(root.right, p, q);
-        if ((lson && rson) || ((root.val == p.val || root.val == q.val) && (lson || rson))) {
-            ans = root;
+    private static TreeNode dfs(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
         }
-        return lson || rson || (root.val == p.val || root.val == q.val);
+        TreeNode left = dfs(root.left, p, q);
+        TreeNode right = dfs(root.right, p, q);
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+        return root;
     }
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        this.dfs(root, p, q);
-        return this.ans;
-    }
 
-
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -56,5 +53,21 @@ public class LeetCode236 {
         TreeNode(int x) {
             val = x;
         }
+    }
+
+    public static void main(String[] args) {
+        TreeNode treeNode = new TreeNode(3);
+        treeNode.left = new TreeNode(5);
+        treeNode.left.left = new TreeNode(6);
+        treeNode.left.right = new TreeNode(2);
+        treeNode.left.right.left = new TreeNode(7);
+        treeNode.left.right.right = new TreeNode(4);
+        treeNode.right = new TreeNode(1);
+        treeNode.right.right = new TreeNode(8);
+        treeNode.right.left = new TreeNode(0);
+
+        TreeNode n = dfs(treeNode,treeNode.left,treeNode.left.right.left);
+        System.out.println(n);
+
     }
 }
