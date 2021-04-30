@@ -71,7 +71,7 @@ public class AIOChatServer {
     }
 
     public void start() {
-        //ExecutorService executorService = Executors.newFixedThreadPool(THREADPOOL_SIZE);
+        ExecutorService executorService = Executors.newFixedThreadPool(THREADPOOL_SIZE);
 
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(THREADPOOL_SIZE, THREADPOOL_SIZE,
                 0L, TimeUnit.MILLISECONDS,

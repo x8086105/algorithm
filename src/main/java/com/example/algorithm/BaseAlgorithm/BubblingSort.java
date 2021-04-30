@@ -13,7 +13,7 @@ public class BubblingSort {
     }
 
     private static void sort(int[] nums){
-        for(int i = 0; i < nums.length - 1; i++){
+        for(int i = 0; i < nums.length ; i++){
             for(int j = nums.length - 1; j > i; j--){
                 if(nums[j - 1] > nums[j]){
                     int tmp = nums[j - 1];

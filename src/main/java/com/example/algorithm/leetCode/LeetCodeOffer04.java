@@ -29,7 +29,7 @@ public class LeetCodeOffer04 {
                 {10, 13, 14, 17, 24},
                 {18, 21, 23, 26, 30}
         };
-       boolean result = findNumberIn2DArray(matrix,5);
+       boolean result = findNumberIn2DArray(matrix,77);
         System.out.println(result);
     }
 
