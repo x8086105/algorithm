@@ -2,7 +2,9 @@ package com.example.studyBase;
 
 import java.util.*;
 
-
+/**
+ * 一致性hash算法
+ */
 public class ConsistentHash {
 
     private interface HashFunction {

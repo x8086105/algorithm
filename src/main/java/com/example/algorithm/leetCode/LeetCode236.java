@@ -1,5 +1,12 @@
 package com.example.algorithm.leetCode;
 
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * 236. 二叉树的最近公共祖先
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
@@ -55,6 +62,52 @@ public class LeetCode236 {
         }
     }
 
+    /**
+     使用栈来存储路径
+     */
+    private static TreeNode low2(TreeNode root,TreeNode p, TreeNode q){
+            //用来存放p节点的路径
+            List<TreeNode> pPath = new ArrayList<>();
+            //用来存放q节点的路径
+            List<TreeNode> qPath = new ArrayList<>();
+            //走过的路径
+            List<TreeNode> path = new ArrayList<>();
+            int finish  = 0;
+            DFS(root,p,path,pPath,finish);
+            finish = 0;
+            path = new LinkedList<>();
+            DFS(root,q,path,qPath,finish);
+            //这里找到路径之后，就进行遍历，
+            TreeNode result = null;
+            int length = Math.min(pPath.size(),qPath.size());
+            for(int i = 0;i < length;i++){
+                TreeNode pNode = pPath.get(i);
+                TreeNode qNode = qPath.get(i);
+                if(pNode == qNode){
+                    result = pNode;
+                }else {
+                    break;
+                }
+            }
+
+            return result;
+
+    }
+    //在节点root中寻找p节点的路径
+    private static void DFS(TreeNode root, TreeNode p,List<TreeNode> path, List<TreeNode> result,int finish){
+        if(root == null || finish == 1){
+            return;
+        }
+        path.add(root);
+        //代表找到了
+        if(root == p){
+            finish = 1;
+            result.addAll(path);
+        }
+        DFS(root.left,p,path,result,finish);
+        DFS(root.right,p,path,result,finish);
+        path.remove(path.size() - 1);
+    }
     public static void main(String[] args) {
         TreeNode treeNode = new TreeNode(3);
         treeNode.left = new TreeNode(5);
@@ -66,8 +119,17 @@ public class LeetCode236 {
         treeNode.right.right = new TreeNode(8);
         treeNode.right.left = new TreeNode(0);
 
-        TreeNode n = dfs(treeNode,treeNode.left,treeNode.left.right.left);
+        TreeNode n = low2(treeNode,treeNode.left,treeNode.left.right.right);
         System.out.println(n);
+//
+//        LinkedList<Integer> s  = new LinkedList<>();
+//        s.push(1);
+//        s.push(2);
+//
+//        LinkedList<Integer> s2 = new LinkedList<>(s);
+//        s.pop();
+//        s.pop();
+//        System.out.println(s2.size());
 
     }
 }

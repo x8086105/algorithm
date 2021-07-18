@@ -1,5 +1,7 @@
 package com.example.algorithm.daliyAttendance;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -9,6 +11,15 @@ import java.util.Stack;
  * 两个不重复的时候
  */
 public class quickSort {
+
+    public static void main(String[] args) {
+        int[] nums={1,2,1,2,1,4,5,1,1,2};
+        //sort( 0, nums.length - 1,nums);
+        quickSort(nums);
+        for(int a : nums){
+            System.out.println(a);
+        }
+    }
 
     //使用
     private static void sort1(int[] a, int low, int high) {
@@ -26,16 +37,20 @@ public class quickSort {
             while (i < j && a[i] < target) {
                 i++;
             }
-            if ((a[i] == a[j]) && i < j) {
-                i++;
-            } else {
-                int t = a[i];
-                a[i] = a[j];
-                a[j] = t;
+            if (i >= j) {
+                break;
             }
+            swap(a,a[i],a[j]);
+            i++;
+            j--;
         }
         sort1(a, low, i - 1);
         sort1(a, j + 1, high);
+    }
+    private static void swap(int[] nums, int index1, int index2) {
+        int temp = nums[index1];
+        nums[index1] = nums[index2];
+        nums[index2] = temp;
     }
 
     /**
@@ -67,11 +82,11 @@ public class quickSort {
 
             //左右两边元素个数 >= 2, low high入栈
             if (par > low + 1){
-                stack.push(low);
-                stack.push(par - 1);
-            }
-            if (par < high - 1){
-                stack.push(par + 1);
+                    stack.push(low);
+                    stack.push(par - 1);
+                }
+                if (par < high - 1){
+                    stack.push(par + 1);
                 stack.push(high);
             }
         }
@@ -79,42 +94,36 @@ public class quickSort {
     /**
      *     建立在一趟快速排序的基础上
      */
-    private static int partion(int[] arr, int low, int high) {
-        //基准值为第一个元素
-        int tmp = arr[low];
-        low = getLow(arr, low, high, tmp);
-        //arr[high] = tmp;
-        arr[low]= tmp;
-        //return high，返回基准值
-        return low;
+    private static int partion(int[] a, int low, int high) {
+        int i = low;
+        int j = high + 1;
+        int target = a[low];
+        while(true){
+            while (a[++i] < target && i  <high){
+
+            }
+            while (a[--j] > target && j > low){
+
+            }
+            if(i >= j){
+                break;
+            }
+            swap(a,i,j);
+        }
+        //将第一个元素进行替换
+        swap(a,low,j);
+        return j;
     }
 
-    static int getLow(int[] arr, int low, int high, int tmp) {
-        while (low < high){//从小到大排列
-            // 找比基准值小的数放在左边
-            while (low < high && arr[high] >= tmp){
-                high--;
-            }
-            if (low >= high){
-                arr[low ]= tmp;
-                break;
-            }else {
-                //arr[high] < tmp
-                arr[low] = arr[high];
-            }
-            //找比基准大的值放在右边
-            while (low < high && arr[low] <= tmp){
-                low++;
-            }
-            if (low >= high){
-                arr[low ]= tmp;
-                break;
-            }else {
-                //arr[low] > tmp
-                arr[high] = arr[low];
-            }
-        }
-        return low;
+
+
+    //采用标准的递归算法排序，以及借鉴算法圣经中的快排讲解
+    private static void sort(int lg,int gt,int[]a){
+        if(gt <= lg) return;
+        int pIndex = partion(a,lg,gt);
+        sort(lg,pIndex - 1,a);
+        sort(pIndex + 1, gt,a);
     }
+
 
 }
