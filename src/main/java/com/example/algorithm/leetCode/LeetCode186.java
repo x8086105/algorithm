@@ -33,29 +33,6 @@ public class LeetCode186 {
         char []s  = {'t','h','e',' ','s','k','y',' ','i','s',' ','b','l','u','e'};
         reverseWords(s);
         System.out.println(s);
-        HashMap<Integer,Integer> map = new HashMap<>();
-       for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+    }
 
-       }
-    }
-    public List<List<String>> groupStrings(String[] strings) {
-        HashMap<String, List<String>> map = new HashMap<>();
-        for (String str : strings) {
-            char[] seq = str.toCharArray();
-            // "" 情况
-            if (seq.length == 0) {
-                map.put("", new ArrayList<String>() {{add(str);}});
-                continue;
-            }
-            // 转为以a开头的 作为key
-            if (seq[0] != 'a') {
-                for (int i = 1; i < seq.length; ++i)
-                    seq[i] = (char) ((seq[i] - seq[0] + 26) % 26 + 'a');
-                seq[0] = 'a';
-            }
-            String key = String.valueOf(seq);
-            map.computeIfAbsent(key, x -> new LinkedList<>()).add(str);
-        }
-        return new ArrayList<>(map.values());
-    }
 }
