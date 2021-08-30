@@ -2,7 +2,6 @@ package com.example.mutileThread;
 
 
 import lombok.extern.slf4j.Slf4j;
-import sun.security.ssl.Debug;
 
 import java.util.concurrent.CountDownLatch;
 
